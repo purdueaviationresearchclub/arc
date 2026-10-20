@@ -1,9 +1,12 @@
 """
-reads raw voltage from a pressure transducer via LabJack T7 and applies formula to convert to psi
+reads raw voltage from a pressure transducer and converts to psi
 """
 
 import logging
-from labjack import ljm
+import busio
+import board
+from adafruit_ads1x15.ads1115 import ADS1115
+from adafruit_ads1x15.analog_in import AnalogIn
 
 logger = logging.getLogger(__name__)
 
