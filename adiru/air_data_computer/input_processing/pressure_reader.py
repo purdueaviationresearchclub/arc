@@ -10,43 +10,39 @@ logger = logging.getLogger(__name__)
 PSI_TO_PASCAL = 6894.76
 
 class PressureReader:    
-    def __init__(self, channel: int = 0, psi_per_volt: float = 25.0, psi_offset: float = -11.45):
-        """
-        Initializes reader
-        channel: AIN channel number on T7
-        psi_per_volt: slope from transducer curve
-        psi_offset: y-intercept from transducer curve
-        """
-        self.channel = channel
+    def __init__(
+        self,
+        adc_channel: int = 0, # ADS1115 channel
+        psi_per_volt: float = 25.0, # slope
+        psi_offset: float = -11.45, # y-intercept
+        gain: int = 1 # gain amplifier
+    ):
+        self.adc_channel = adc_channel
         self.psi_per_volt = psi_per_volt
         self.psi_offset = psi_offset
-        self.handle = None
+        self.gain = gain
+        self._adc = None
+        self._channel = None
 
     def connect(self) -> None:
-        """opens connection to T7"""
-        self.handle = ljm.openS("T7", "ANY", "ANY")
-        info = ljm.getHandleInfo(self.handle)
-        logger.info(f"connected to {info[2]}")
+        i2c = busio.I2C(board.SCL, board.SDA)
+        self._adc = ADS1115(i2c, gain=self.gain)
+        self._channel = AnalogIn(self._adc, self.adc_channel)
+        logger.info("connected")
 
     def read_psi(self) -> float:
-        """
-        reads voltage and applies linear regression to output psi
-        """
-        if self.handle is None:
-            raise ConnectionError("not connected")
-            
-        volts = ljm.eReadName(self.handle, f"AIN{self.channel}")
+        if self._channel is None:
+            raise ConnectionError("not initialized")
+
+        volts = self._channel.voltage
         psi = (volts * self.psi_per_volt) + self.psi_offset
         return psi
 
     def read_pascals(self) -> float:
-        """reads psi and converts to pascals for use by ADIRU"""
         psi = self.read_psi()
         return psi * PSI_TO_PASCAL
 
     def disconnect(self) -> None:
-        """closes the connection"""
-        if self.handle is not None:
-            ljm.close(self.handle)
-            logger.info("connection closed")
-            self.handle = None
+        self._channel = None
+        self._adc = None
+        logger.info("connection closed")

@@ -1,0 +1,6 @@
+# dependencies, install all with the command,
+# pip install -r requirements.txt
+
+adafruit-blinka
+adafruit-circuitpython-ads1x15
+# labjack-ljm

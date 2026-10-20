@@ -10,10 +10,8 @@ RHO_0 = 1.225
 def compute_ias_meters_per_sec(p_total_pa: float, p_static_pa: float) -> float:
     """
     IAS in meters per second
-    
-    p_total_pa: total (pitot) pressure in pascals.
-    p_static_pa: static pressure in pascals.
-    
+    p_total_pa: total (pitot) pressure in pascals
+    p_static_pa: static pressure in pascals
     returns 0.0 if differential pressure is negative or zero
     """
     differential_pressure = p_total_pa - p_static_pa
