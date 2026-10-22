@@ -10,4 +10,4 @@ children: [LLR-003]
 # L2-010: Altitude Bound
 
 ## Statement
-The Air Data Computer shall limit AirDataComputer:altitude to —
+The Air Data Computer shall limit Altitude to —
