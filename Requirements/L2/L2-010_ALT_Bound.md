@@ -7,7 +7,7 @@ parents: []
 children: [LLR-003]              
 ---
 
-# LLR-003: Altitude Bound
+# L2-010: Altitude Bound
 
 ## Statement
 The Air Data Computer shall limit AirDataComputer:altitude to —
