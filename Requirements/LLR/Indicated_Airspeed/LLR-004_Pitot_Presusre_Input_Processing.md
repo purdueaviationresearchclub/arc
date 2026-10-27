@@ -1,7 +1,7 @@
 ---
 id: LLR-004                
 title: Pitot Pressure Input Processing
-status: draft             
+status: Deprecated            
 owner: Gavin Siems
 parents: [L2-004]               
 children: [None]              

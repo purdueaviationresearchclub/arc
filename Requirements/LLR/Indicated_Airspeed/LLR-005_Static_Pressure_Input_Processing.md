@@ -1,7 +1,7 @@
 ---
 id: LLR-005                
 title: Static Pressure Input Processing
-status: draft             
+status: deprecated             
 owner: Gavin Siems
 parents: [L2-004]               
 children: [None]              
