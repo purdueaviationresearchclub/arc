@@ -74,9 +74,9 @@ class PFDConfig:
     spd_minor_step: int = 5
     spd_unit_per_px: float = 0.2
     spd_label_font: int = 24
-    spd_readout_font: int = 36
+    spd_readout_font: int = 32
     spd_readout_h: int = 40
-    spd_readout_w: int = 70
+    spd_readout_w: int = 90
     spd_readout_off_x: int = -40
     spd_readout_off_y: int = 0
     spd_readout_bg: Color = "#000000"
@@ -100,9 +100,9 @@ class PFDConfig:
     alt_minor_step: int = 50
     alt_unit_per_px: float = 2.0
     alt_label_font: int = 24
-    alt_readout_font: int = 36
+    alt_readout_font: int = 32
     alt_readout_h: int = 40
-    alt_readout_w: int = 70
+    alt_readout_w: int = 90
     alt_readout_off_x: int = 40
     alt_readout_off_y: int = 0
     alt_readout_bg: Color = "#000000"
@@ -126,7 +126,7 @@ class PFDConfig:
     vsi_unit_per_px: float = 2.5
     vsi_label_font: int = 16
     vsi_readout_font: int = 20
-    vsi_readout_h: int = 20
+    vsi_readout_h: int = 25
     vsi_readout_w: int = 35
     vsi_readout_off_x: int = 20
     vsi_readout_off_y: int = 0
@@ -598,6 +598,7 @@ class PrimaryFlightDisplay:
                    tick_thick,
                    ticks_on_right,
                    label_fmt=None,
+                   readout_suffix="",
                    ):
         c = self.cfg
         w = width
@@ -654,7 +655,7 @@ class PrimaryFlightDisplay:
         ry = self._clamp(ry, top, bot - rh)
         pygame.draw.rect(s, _c(readout_bg), (rx, ry, rw, rh))
         pygame.draw.rect(s, _c(readout_border), (rx, ry, rw, rh), 2)
-        val_str = f"{value:.0f}"
+        val_str = f"{value:.0f}{readout_suffix}"
         self._txt(self._fonts[rout_font_key], val_str, readout_text,
                   (rx + rw // 2, ry + rh // 2), center=True)
 
@@ -683,6 +684,7 @@ class PrimaryFlightDisplay:
             number_color=c.spd_number_color,
             tick_thick=c.spd_tick_thick,
             ticks_on_right=True,
+            readout_suffix="KT",
         )
 
     # altitude tape
@@ -706,6 +708,8 @@ class PrimaryFlightDisplay:
             number_color=c.alt_number_color,
             tick_thick=c.alt_tick_thick,
             ticks_on_right=False,
+            # label_fmt=lambda v: str(v // 100),
+            readout_suffix="FT",
             # label_fmt=lambda v: str(v // 100),
             # label_fmt=lambda v: f"{v:+.0f}",
         )
@@ -732,6 +736,7 @@ class PrimaryFlightDisplay:
             tick_thick=c.vsi_tick_thick,
             ticks_on_right=False,
             label_fmt=lambda v: f"{v:+.0f}",
+            # readout_suffix="FPM",
         )
 
     # horizontal slip
