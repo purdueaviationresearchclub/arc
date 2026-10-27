@@ -465,15 +465,18 @@ class PrimaryFlightDisplay:
         pxd = c.pitch_px_per_deg
         cos_r, sin_r = math.cos(roll_rad), math.sin(roll_rad)
 
+        h_y = cy + pitch_px
+
         def rot(px_, py_):
-            dx_, dy_ = px_ - cx, py_ - cy
-            return (cx + dx_ * cos_r + dy_ * sin_r, cy - dx_ * sin_r + dy_ * cos_r)
+            dx_, dy_ = px_ - cx, py_ - h_y
+            return (cx + dx_ * cos_r + dy_ * sin_r, h_y - dx_ * sin_r + dy_ * cos_r)
 
         for p in range(-90, 91, c.pitch_minor_step):
             # line_cy = h_y - p * pxd  =  cy + (pitch_deg - p) * pxd
             line_cy = cy + (d.pitch_deg - p) * pxd
             if p == 0:
-                half = c.pitch_zero_len_half
+                # half = c.pitch_zero_len_half
+                continue
             elif p % c.pitch_major_step == 0:
                 half = c.pitch_line_major_half
             else:
