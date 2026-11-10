@@ -350,7 +350,7 @@ class PrimaryFlightDisplay:
     def close(self) -> None:
         pygame.quit()
 
-    def run(self, dummy: bool = True) -> None:
+    def run(self, dummy: bool = True, data_provider=None) -> None:
         self.init_window()
         try:
             while True:
@@ -359,7 +359,10 @@ class PrimaryFlightDisplay:
                         return
                     if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE:
                         return
-                if dummy:
+                if data_provider is not None:
+                    data = data_provider()
+                    self.set(**data)
+                elif dummy:
                     self._inject_dummy()
                 self.render()
                 pygame.display.flip()
