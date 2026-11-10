@@ -1,5 +1,6 @@
 """
 LLR-006 Indicated Airspeed Meters Per Sec
+IAS = sqrt(2 * P_Diff / rho_0)
 """
 
 import math
@@ -10,6 +11,7 @@ RHO_0 = 1.225
 def compute_ias_meters_per_sec(p_total_pa: float, p_static_pa: float) -> float:
     """
     IAS in meters per second
+
     p_total_pa: total (pitot) pressure in pascals
     p_static_pa: static pressure in pascals
     returns 0.0 if differential pressure is negative or zero
