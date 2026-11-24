@@ -8,6 +8,7 @@ LLR-002: write altitude to the PFD
 
 import logging
 from config import MPS_TO_KNOTS, FPS_TO_FPM
+from adiru.air_data_computer.data_types import PressureData
 from adiru.air_data_computer.data_types import AirData
 
 logger = logging.getLogger(__name__)
